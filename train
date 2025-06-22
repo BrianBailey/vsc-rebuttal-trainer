@@ -1,0 +1,31 @@
+# vsc_rebuttal_trainer.py
+
+import streamlit as st
+import pandas as pd
+import random
+
+st.set_page_config(page_title="VSC Rebuttal Trainer", layout="centered")
+
+# Load your objection-rebuttal data
+df = pd.read_csv("vsc_rebuttals.csv")
+
+st.title("🚘 VSC Objection Rebuttal Trainer")
+st.write("Sharpen your skills by flipping through real car warranty objections and elite rebuttals.")
+
+# Random flashcard
+if "index" not in st.session_state:
+    st.session_state.index = random.randint(0, len(df) - 1)
+
+if st.button("🔄 New Objection"):
+    st.session_state.index = random.randint(0, len(df) - 1)
+
+current = df.iloc[st.session_state.index]
+
+st.subheader("❗ Objection:")
+st.markdown(f"**{current['Objection']}**")
+
+if st.button("🎯 Show Rebuttal"):
+    st.success(current['Rebuttal'])
+
+st.markdown("---")
+st.caption("Built for high-performance VSC closers 💪")
